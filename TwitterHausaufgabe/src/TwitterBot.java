@@ -7,24 +7,60 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
-
+/**
+ * 
+ * Diese Klasse implementiert einen Bot fuer Twitter der andern Usern
+ * folgen kann und diesen automatisch antworten kann.
+ * 
+ * @author Andy Klay, Sebastian Minke
+ *
+ */
 public class TwitterBot extends TimerTask  {
 
 	protected ArrayList<Long> ids = new ArrayList<Long>();
 
+	/**
+	 * twitterschluessel consumerKey
+	 */
 	private String consumerKey;
+	
+	/**
+	 * twitterschluessel consumerSecret
+	 */
 	private String consumerSecret;
+	
+	/**
+	 * twitterschluessel accessToken
+	 */
 	private String accessToken;
+	
+	/**
+	 * twitterschluessel accessTokenSecret
+	 */
 	private String accessTokenSecret;
 	
-	
+	/**
+	 * Nachrichtenzaehler
+	 */
 	private long messageCounter=0;
 	
-	
+	/**
+	 * Standardantwort
+	 */
 	private static String STANDARD_ANSWER = " The person you have talked is temporarily not available!";
 
+	/**
+	 * Twitterinstanz
+	 */
 	private Twitter twitter;
 
+	/**
+	 * Konstruktor
+	 * @param consumerKey
+	 * @param consumerSecret
+	 * @param accessToken
+	 * @param accessTokenSecret
+	 */
 	public TwitterBot(String consumerKey, String consumerSecret, String accessToken, String accessTokenSecret) {
 		this.consumerKey=consumerKey;
 		this.consumerSecret=consumerSecret;
@@ -36,15 +72,15 @@ public class TwitterBot extends TimerTask  {
 	 * Authentifiziert die Applikation mit Twitter
 	 */
 	public void login() {
-		ConfigurationBuilder cb = new ConfigurationBuilder();
-		cb.setDebugEnabled(true);
-		cb.setOAuthConsumerKey(consumerKey);
-		cb.setOAuthConsumerSecret(consumerSecret);
-		cb.setOAuthAccessToken(accessToken);
-		cb.setOAuthAccessTokenSecret(accessTokenSecret);
+		ConfigurationBuilder configBuilder = new ConfigurationBuilder();
+		configBuilder.setDebugEnabled(true);
+		configBuilder.setOAuthConsumerKey(consumerKey);
+		configBuilder.setOAuthConsumerSecret(consumerSecret);
+		configBuilder.setOAuthAccessToken(accessToken);
+		configBuilder.setOAuthAccessTokenSecret(accessTokenSecret);
 
-		TwitterFactory tf = new TwitterFactory(cb.build());
-		this.twitter = tf.getInstance();
+		TwitterFactory twitterFactory = new TwitterFactory(configBuilder.build());
+		this.twitter = twitterFactory.getInstance();
 	}
 
 	public void addToFollow(String name) {

@@ -5,7 +5,13 @@ import java.util.Timer;
 
 
 
-
+/**
+ * Start Klasse
+ * 
+ * 
+ * @author Andy Klay, Sebastian Minke
+ *
+ */
 public class Start {
 	
 	static Timer timer = new Timer();
@@ -24,9 +30,6 @@ public class Start {
 		if(!(args.length>=4)){
 			System.out.println("Bitte geben Sie alle TwitterApp-Schluessel mit!");
 		}
-		
-		
-		
 		
 		//Twitterbot erstellen
 		TwitterBot bot= new TwitterBot(args[0], args[1], args[2], args[3]);		
