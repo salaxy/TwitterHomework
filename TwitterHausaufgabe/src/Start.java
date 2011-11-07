@@ -1,5 +1,3 @@
-import java.util.Timer;
-
 
 
 public class Start {
@@ -10,22 +8,18 @@ public class Start {
 	 */
 	public static void main(String[] args) {	
 		
-		//init
+		//Twitterbot erstellen
 		TwitterBot bot=new TwitterBot();
+		
 		//anmelden des eigenen Accounts
 		bot.login();
 		
 		//Kontakte adden
-		bot.addToFollow("person1");
-		bot.addToFollow("person2");
-
+		bot.addToFollow("twitt3rbot");
+		bot.addToFollow("TwitBot2");
 		
-		while(true){
-			bot.checkToAnswer();
-		}
+		//Thread starten
+		bot.run();
 	}
-	
-
-
 
 }
