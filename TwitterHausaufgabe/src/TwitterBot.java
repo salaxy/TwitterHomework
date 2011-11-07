@@ -127,7 +127,7 @@ public class TwitterBot extends TimerTask  {
 			twitter.createFriendship(name);
 			System.out.println("Folge Erfolgreich (" + name + ")");
 		} catch (TwitterException te) {
-			System.err.println("Konnte nicht folgen!");
+//			System.err.println("Konnte nicht folgen!");
 		}
 	}
 
