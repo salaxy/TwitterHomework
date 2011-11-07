@@ -12,17 +12,24 @@ public class TwitterBot extends TimerTask  {
 
 	protected ArrayList<Long> ids = new ArrayList<Long>();
 
-	private static String CON_KEY = "yZR1qUww5XUo7AyGULMAcw";
-	private static String CON_SEC = "JlzcAihS1C8fIA6rUJNBTr4ucVHUt3uYGkgLzZ6A";
-	private static String ACC_KEY = "404279119-gO2LepPJrIMB4mXJnyfjVoZdugHWFT6tooIU5qE";
-	private static String ACC_SEC = "gimlxVg1S0m1W7cEDOPyDzF5Mn0dY9pr9ZbBh9iM3Zk";
-
-	private static String STANDARD_ANSWER = " The person you have talked is temporarily not available";
+	private String consumerKey;
+	private String consumerSecret;
+	private String accessToken;
+	private String accessTokenSecret;
+	
+	
+	private long messageCounter=0;
+	
+	
+	private static String STANDARD_ANSWER = " The person you have talked is temporarily not available!";
 
 	private Twitter twitter;
 
-	public TwitterBot() {
-
+	public TwitterBot(String consumerKey, String consumerSecret, String accessToken, String accessTokenSecret) {
+		this.consumerKey=consumerKey;
+		this.consumerSecret=consumerSecret;
+		this.accessToken=accessToken;
+		this.accessTokenSecret=accessTokenSecret;
 	}
 
 	/**
@@ -31,10 +38,10 @@ public class TwitterBot extends TimerTask  {
 	public void login() {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true);
-		cb.setOAuthConsumerKey(CON_KEY);
-		cb.setOAuthConsumerSecret(CON_SEC);
-		cb.setOAuthAccessToken(ACC_KEY);
-		cb.setOAuthAccessTokenSecret(ACC_SEC);
+		cb.setOAuthConsumerKey(consumerKey);
+		cb.setOAuthConsumerSecret(consumerSecret);
+		cb.setOAuthAccessToken(accessToken);
+		cb.setOAuthAccessTokenSecret(accessTokenSecret);
 
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		this.twitter = tf.getInstance();
@@ -46,7 +53,7 @@ public class TwitterBot extends TimerTask  {
 	}
 
 	/**
-	 * wird alle 5 Sekunden aufgerufen
+	 * wird alle 20 Sekunden aufgerufen
 	 */
 	public void run() {
 		this.checkToAnswer();
@@ -56,7 +63,6 @@ public class TwitterBot extends TimerTask  {
 	 * checke Kontakte ab und antworte falls nötig.
 	 */
 	public void checkToAnswer() {
-
 		
 		try {
 			List<Status> stats;
@@ -64,10 +70,12 @@ public class TwitterBot extends TimerTask  {
 				
 			for (Status status : stats) {
 				if (isNotYetAnswered(ids, status.getId())) {
-					 update("@" + status.getUser().getScreenName() + STANDARD_ANSWER);
+					messageCounter++;
+					 update("@" + status.getUser().getScreenName() + STANDARD_ANSWER + " ("+ messageCounter +")");
 				}
 			}
 		} catch (TwitterException te) {
+			System.err.println(te.getMessage());
 		}
 	}
 
@@ -83,7 +91,7 @@ public class TwitterBot extends TimerTask  {
 			twitter.createFriendship(name);
 			System.out.println("Folge Erfolgreich (" + name + ")");
 		} catch (TwitterException te) {
-			System.err.println("Konnte nicht folgen: " + te.getMessage());
+			System.err.println("Konnte nicht folgen!");
 		}
 	}
 
@@ -116,9 +124,9 @@ public class TwitterBot extends TimerTask  {
 
 		try {
 			Status status = twitter.updateStatus(message);
-			System.out.println("Erfolgreich updated zu (" + status.getText()
-					+ ")");
+			System.out.println("Erfolgreich updated zu (" + status.getText()+ ")");
 		} catch (TwitterException te) {	
+			System.err.println("Konnte nicht updaten!");
 		}
 	}
 }

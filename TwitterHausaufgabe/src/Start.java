@@ -11,14 +11,28 @@ public class Start {
 	static Timer timer = new Timer();
 
 	/**
-	 * @param args
+	 * Startet die Anwendung mit den Parameter fuer den Twitter Account
+	 * @param 
+	 * args[0]= consumerKey 
+	 * args[1]= consumerSecret 
+	 * args[2]= accessToken 
+	 * args[3]= accessTokenSecret
 	 */
 	public static void main(String[] args){	
+		
+		//abfragen ob richtige anzahl an Argumenten mitgeliefert wurde
+		if(!(args.length>=4)){
+			System.out.println("Bitte geben Sie alle TwitterApp-Schluessel mit!");
+		}
+		
+		
+		
+		
 		//Twitterbot erstellen
-		TwitterBot bot= new TwitterBot();		
+		TwitterBot bot= new TwitterBot(args[0], args[1], args[2], args[3]);		
 		//anmelden des eigenen Accounts
 		bot.login();		
-		timer.schedule(bot, 0, 5000);	
+		timer.schedule(bot, 0, 20000);	
 		menue(bot);
 	}
 	
@@ -60,7 +74,9 @@ public class Start {
 					System.out.println("Falsche Eingabe");
 				}				
 			} catch (NumberFormatException e) { 
+				System.err.println(e.getMessage());
 			} catch (IOException e) {
+				System.err.println(e.getMessage());
 			} 
 		}
 	}
