@@ -24,13 +24,15 @@ public class Start {
 	
 	
 	/**
-	 * Zeigt dsa Menue an
+	 * Zeigt das Menue an
 	 */
 	private static void showMenue(){
+		System.out.println("-----------------------------------------------------------------");
 		System.out.println("-----------Drücke 1 zum Folgen eines Users-----------------------");
 		System.out.println("-----------Drücke 2 zum erneuten anzeigen des Menues. -----------");
 		System.out.println("-----------Drücke 3 zum Schließen des Programms.-----------------");
 		System.out.println("-----------Die Auswahl mit Enter bestätigen.---------------------");
+		System.out.println("-----------------------------------------------------------------");
 	}
 	
 	
@@ -59,8 +61,7 @@ public class Start {
 				}				
 			} catch (NumberFormatException e) { 
 			} catch (IOException e) {
-			} catch(NullPointerException e){
-			}
+			} 
 		}
 	}
 

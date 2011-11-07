@@ -49,17 +49,7 @@ public class TwitterBot extends TimerTask  {
 	 * wird alle 5 Sekunden aufgerufen
 	 */
 	public void run() {
-
 		this.checkToAnswer();
-//		try {
-//			
-//			// max 120 Anfragen/Stunde
-////			TwitterBot.sleep(30000l);
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
 	}
 
 	/**
@@ -78,8 +68,6 @@ public class TwitterBot extends TimerTask  {
 				}
 			}
 		} catch (TwitterException te) {
-			// TODO Auto-generated catch block
-//			te.printStackTrace();
 		}
 	}
 
@@ -130,8 +118,7 @@ public class TwitterBot extends TimerTask  {
 			Status status = twitter.updateStatus(message);
 			System.out.println("Erfolgreich updated zu (" + status.getText()
 					+ ")");
-		} catch (TwitterException te) {
-			System.err.println("resend not possible \"" + message + "\"" );				
+		} catch (TwitterException te) {	
 		}
 	}
 }
